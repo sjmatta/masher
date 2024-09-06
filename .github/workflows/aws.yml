@@ -49,3 +49,4 @@ jobs:
 
     - name: Deploy to AWS Lambda
       run: cdk deploy -c domainName="${{ secrets.DOMAIN_NAME }}" -c subdomainName="${{ secrets.SUBDOMAIN_NAME }}" -c calendarName="${{ secrets.CALENDAR_NAME }}" -c icsUrls="${{ secrets.ICS_URLS }}"
+      working-directory: ./cdk
