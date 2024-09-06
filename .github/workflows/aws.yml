@@ -3,7 +3,7 @@ name: Deploy to AWS with OIDC
 on:
   push:
     branches:
-      - main 
+      - main
       - aws
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-
+      
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
@@ -56,8 +56,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         npm install -g aws-cdk
-
+        
     - name: Deploy to AWS Lambda with CDK
       run: |
-        cdk deploy -c domainName="${{ secrets.DOMAIN_NAME }}" -c subdomainName="${{ secrets.SUBDOMAIN_NAME }}" -c calendarName="${{ secrets.CALENDAR_NAME }}" -c icsUrls="${{ secrets.ICS_URLS }}"
+        cdk deploy \
+          -c domainName="${{ secrets.DOMAIN_NAME }}" \
+          -c subdomainName="${{ secrets.SUBDOMAIN_NAME }}" \
+          -c calendarName="${{ secrets.CALENDAR_NAME }}" \
+          -c icsUrls="${{ secrets.ICS_URLS }}"
       working-directory: ./cdk
