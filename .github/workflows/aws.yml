@@ -33,9 +33,7 @@ jobs:
         distribution: 'corretto'
 
     - name: Build with Maven (quiet)
-      run: mvn -q \
-        -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
-        clean package
+      run: mvn -q -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
       working-directory: ./lambda
 
     - name: Save Maven cache
