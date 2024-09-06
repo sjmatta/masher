@@ -29,7 +29,7 @@ jobs:
       working-directory: ./lambda
 
     - name: Configure AWS credentials with OIDC
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE }}
         aws-region: ${{ secrets.AWS_REGION }}
