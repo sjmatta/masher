@@ -36,14 +36,6 @@ jobs:
       run: mvn -q -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn clean package
       working-directory: ./lambda
 
-    - name: Save Maven cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-maven-
-
     - name: Configure AWS credentials with OIDC
       uses: aws-actions/configure-aws-credentials@v4
       with:
@@ -66,9 +58,6 @@ jobs:
         npm install -g aws-cdk
 
     - name: Deploy to AWS Lambda with CDK
-      run: cdk deploy \
-        -c domainName="${{ secrets.DOMAIN_NAME }}" \
-        -c subdomainName="${{ secrets.SUBDOMAIN_NAME }}" \
-        -c calendarName="${{ secrets.CALENDAR_NAME }}" \
-        -c icsUrls="${{ secrets.ICS_URLS }}"
+      run: |
+        cdk deploy -c domainName="${{ secrets.DOMAIN_NAME }}" -c subdomainName="${{ secrets.SUBDOMAIN_NAME }}" -c calendarName="${{ secrets.CALENDAR_NAME }}" -c icsUrls="${{ secrets.ICS_URLS }}"
       working-directory: ./cdk
