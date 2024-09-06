@@ -10,7 +10,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - "**"
   pull_request:
     branches: [ "main" ]
 
@@ -27,6 +28,9 @@ jobs:
         java-version: '21'
         distribution: 'corretto'
         cache: maven
-    - name: Build with Maven
+    - name: Build Lambda with Maven
       run: ./mvnw -B clean package
       working-directory: ./lambda
+    - name: Build CDK with Maven
+      run: ./mvnw -B clean package
+      working-directory: ./cdk
